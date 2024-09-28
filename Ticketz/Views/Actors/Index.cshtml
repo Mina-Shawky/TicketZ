@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Actor>
+@{
+    ViewData["Title"] = "Actors";
+}
+
+<h3 class="ipc"><i class="bi bi-person-circle"></i> Actors</h3>
+<hr />
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <a asp-action="Create" asp-controller="Actors" class="btn btn-primary"><i class="bi bi-file-earmark-plus"></i> Create Actor</a>
+}
+<div class="mt-4">
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> No Actors Found....
+        </div>
+    }
+    else
+    {
+        <div class="row">
+
+            @foreach (var i in Model)
+            {
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                          
+                            <div class="col-md-2  ">
+                                <img style="width:193px;height:253px;" src="data:image/jpg;base64,@(Convert.ToBase64String(i.Picture))" class="poster   img-fluid rounded-start " alt="Poster">
+                            </div>
+                            <div class="col-md-10">
+                                <div class="card-body d-flex flex-column justify-content-between h-100">
+                                    <div>
+                                        <h5 class="card-title"><i class="bi bi-person-vcard"></i> @i.Name</h5>
+                                        <h6 class="card-title">Bio  :  </h6>
+                                        <p class="card-text text-justify">@(i.Bio.Length > 500 ? $"{i.Bio.Substring(0, 500)}...." : i.Bio)</p>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                        </div>
+                                        <div>
+                                            <a asp-action="Details" asp-controller="Actors" asp-route-id="@i.Id" class="btn btn-primary">
+                                                <i class="bi bi-display"></i> Details
+                                            </a>
+                                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                            {
+                                            <a asp-action="Update" asp-controller="Actors" asp-route-id="@i.Id" class="btn btn-info">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </a>
+                                            <a href="javascript:;" class="btn btn-danger js-delete" data-id="@i.Id">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.js-delete').on('click', function() {
+                var btn = $(this);
+
+
+                bootbox.confirm({
+                    message: 'Are you sure that you need to delete this Actor!',
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-outline-secondary'
+                        }
+                    },
+                    callback: function(result) {
+                        if (result) {
+                            $.ajax({
+                                url: '/Actors/Delete/' + btn.data('id'),
+                                success: function() {
+                                    var moviecontainer = btn.parents('.col-12');
+
+                                    moviecontainer.addClass('animate__animated animate__zoomOutDown');
+                                    setTimeout(function() {
+                                        moviecontainer.remove();
+                                    }, 1000);
+                                    toastr.warning('Actor is remove successful!');
+                                },
+                                error: function() {
+                                    toastr.error('---error!!---');
+                                }
+                            });
+                        }
+
+                    }
+                });
+
+
+            });
+        });
+    </script>
+}

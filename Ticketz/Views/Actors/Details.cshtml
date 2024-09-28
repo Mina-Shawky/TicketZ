@@ -1,0 +1,35 @@
+﻿@model Actor
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="row mt-5 justify-content-between">
+    <div class="col-md-3">
+        <img src="data:image/jpg;base64,@(Convert.ToBase64String(Model.Picture))" style="border-radius:50%;width:300px;height380px;" class="img-thumbnail" alt="Logo" />
+    </div>
+    <div class="col-md-8" style="margin-top:20px;">
+        <div class="d-flex justify-content-between mb-3">
+            <h3><i class="bi bi-person-vcard"></i> @Model.Name</h3>
+            <span class="mt-2">
+                <span class="text-muted">
+                </span>
+            </span>
+        </div>
+        <span class="text-muted" style="margin-right:8px;">
+        </span>
+        <span class="text-muted ">
+        </span>
+        <h5>Bio  :  </h5>
+        <p class="text-justify mt-3">@Model.Bio</p>
+
+    </div>
+
+
+</div>
+<br />
+<br />
+<br />
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+<a asp-action="Index" style="margin-left:575px;"  class="btn btn-danger mt-3"><i class="bi bi-x-circle"></i> Back To List</a>
+}

@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "animate.css@4.1.1",
+      "destination": "wwwroot/animate.css/",
+      "files": [
+        "animate.min.css"
+      ]
+    },
+    {
+      "library": "bootbox.js@6.0.0",
+      "destination": "wwwroot/bootbox.js/",
+      "files": [
+        "bootbox.min.js"
+      ]
+    },
+    {
+      "library": "bootstrap-icons@1.11.3",
+      "destination": "wwwroot/bootstrap-icons/",
+      "files": [
+        "bootstrap-icons.svg",
+        "font/bootstrap-icons.min.css"
+      ]
+    }
+  ]
+}

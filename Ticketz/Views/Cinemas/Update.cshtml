@@ -1,0 +1,49 @@
+﻿@model UpdateCinemaViewModel
+
+@{
+    ViewData["Title"] = "Update Cinema";
+}
+<h3 class="ipc"><i class="bi bi-pencil"></i> Update Cinema </h3>
+<hr />
+
+<section class="row justify-content-between">
+    <div class="col-md-5 ">
+        <form asp-action="Update" asp-controller="Cinemas" enctype="multipart/form-data" method="post">
+
+            <div class="form-group">
+                <label class="text-muted" asp-for="Name"></label>
+                <input type="text" class="form-control" asp-for="Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="text-muted"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="custom-file mt-3" id="ww">
+                <input type="file" class="custom-file-input" asp-for="Logo" accept="image/*" />
+                <label class="custom-file-label" asp-for="Logo"></label>
+                <div><small id="emailHelp" class="form-text text-muted">Only .jpg, .png, .png files are allowed</small></div>
+                <span asp-validation-for="Logo" class="text-danger d_block"></span>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-success"><i class="bi bi-pencil-square"></i> Update</button>
+            <a asp-action="Index" asp-controller="Cinemas" class="btn btn-danger"><i class="bi bi-x-circle"></i> Cancel</a>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div id="IdPoster">
+            <img src=" data:image/jpg;base64,@(Convert.ToBase64String(Model.LogoCurrent))" class="cover-preview  img-thumbnail" alt="Picture" style="width:300px;height:360px;" />
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function() {
+            $('#Logo').on('change', function() {
+                $('.cover-preview').attr('src', window.URL.createObjectURL(this.files[0])).removeClass('d-none');
+            });
+        });
+    </script>
+}

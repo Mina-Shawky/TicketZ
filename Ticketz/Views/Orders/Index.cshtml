@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<h3 class="ipc"><i class="bi bi-bag-check"></i> Orders</h3>
+<hr />
+<div class="mt-4">
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> No Orders Found....
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                    <th>Title</th>
+                    <th>Logo</th>
+                    <th>Total</th>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <th>User</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                
+                    <tr class="table-active">
+                    <td class="align-middle">@order.Id</td>
+                    <td class="align-middle">
+                            @foreach (var item in order.OrderItems)
+                            {
+                                <span style="background-color:yellow;" class="badge  text-black">@item.Amount</span>
+ 
+                            }
+                    </td>
+                    <td class="align-middle">
+                           @foreach (var item in order.OrderItems)
+                        {
+                                <span style="background-color:yellow;" class="badge  text-black">@item.Price.ToString("c")</span>
+                        }
+                     </td>
+                        <td class="align-middle">
+                            @foreach (var item in order.OrderItems)
+                            {
+                                <span style="background-color:yellow;" class="badge  text-black">@item.Movie.Title</span>
+                            }
+                        </td>
+                        <td class="align-middle">
+                            @foreach (var item in order.OrderItems)
+                            {
+                                <img style="width:45px;height:45px;" src="data:image/jpg;base64,@(Convert.ToBase64String(item.Movie.Picture))" class="poster   img-fluid rounded-start " alt="Poster">
+                            }
+                        </td>
+                    <td class="align-middle">
+                        @order.OrderItems.Select(m => m.Movie.Price * m.Amount).Sum().ToString("c")
+                    </td>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <td class="align-middle">@order.User.FirstName  @order.User.LastName</td>
+                    }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

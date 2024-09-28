@@ -1,0 +1,175 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+body {
+  margin-bottom: 60px;
+}
+
+#home_img_holder {
+    width: 72px;
+    height: 32px;
+    position: relative;
+}
+
+.ipc:before {
+    background: #888888;
+    border-radius: var(--ipt-cornerRadius);
+    content: "";
+    margin-left: -.65rem;
+    align-self: flex-start;
+    position: absolute;
+    height: 45px;
+    width: 5px;
+}
+/*.ipcC:before {
+    background: #888888;
+    border-radius: var(--ipt-cornerRadius);
+    content: "";
+    margin-left: -.65rem;
+    align-self: flex-start;
+    position: absolute;
+    height: 45px;
+    width: 5px;
+}*/
+.card-header {
+    height: 50px;
+    min-height: 50px;
+}
+.card-header h5 {
+        font-size: 20px;
+       text-align:center;
+}
+
+
+.card-header {
+    padding: 10px;
+}
+.card-header {
+    height: 5vh;
+}
+
+.small-header {
+    height: 40px;
+    padding: 5px;
+}
+
+.card {
+    position: relative;
+}
+
+.red-button, .purple-button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 36%;
+    padding: 10px;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.red-button {
+    background-color: #FF0000;
+    color: #FFFFFF;
+}
+
+.purple-button {
+    background-color: #800080;
+    color: #FFFFFF;
+}
+
+
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 200px;
+}
+
+.search-container input[type="text"] {
+        padding: 6px;
+        border: 0px solid #ccc;
+        border-radius: 6px;
+
+}
+
+.search-container button {
+        padding: 6px 18px;
+        background-color: #f5c518; 
+        color: black;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer; 
+}
+
+.TitleLink {
+    text-decoration: none;
+    color: #888888; 
+}
+
+    .TitleLink:hover {
+        text-decoration: none;
+        color: #000; 
+    }
+
+
+.containerss {
+    position: relative;
+    width: 50%;
+    height: 100px;
+    background-color: #282828; /* المنطقة الزرقاء */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 208px;
+}
+
+.total-pricess {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 100px;
+}
+.containerssAA {
+    position: relative;
+    width: 50%;
+    height: 100px;
+    background-color: #282828; /* المنطقة الزرقاء */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left:208px;
+}
+
+

@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Movie>
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<h3 class="ipc"><i class="bi bi-tv"></i> Movies</h3>
+<hr />
+ @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){
+<a asp-action="Create" asp-controller="Movies" class="btn btn-primary"><i class="bi bi-file-earmark-plus"></i> Create Movie</a>
+<br />
+<br />
+}
+<div class="row ">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3  rowww">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-dark   small-header">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.Title
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="data:image/jpg;base64,@(Convert.ToBase64String(item.Picture))"style="width:207px;height:270px;"  alt="@item.Title">
+                    </div>
+                    <div class="col-md-6  card">
+                        <div class="card-body" >
+                            <p class="card-text"><b>Cinema: </b>@item.Cinema.Name</p>
+                            <p class="card-text"><b>Genre: </b>@item.Genre</p>
+                            <p class="card-text"><b>Start Date: </b>@item.StartDate.ToString("dd MMM yy")</p>
+                            <p class="card-text"><b>End Date: </b>@item.EndDate.ToString("dd MMM yy")</p>
+                            <p class="card-text ">
+                                <b>Status: </b>
+                                @if (DateTime.Now >= item.StartDate && DateTime.Now <= item.EndDate)
+                                {
+                                    <span class="badge bg-success text-white">AVAILABLE</span>
+                                }
+                                else if (DateTime.Now > item.EndDate)
+                                {
+                                    <span class="badge bg-danger text-white">EXPIRED</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-primary text-white">UPCOMING</span>
+                                }
+                            </p>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <div class="card-actions">
+                                    <a style="margin-left:10px;" class="btn btn-info   purple-button" asp-action="Update" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                <a href="javascript:;" style="margin-left:123px;" class="js-delete  btn btn-danger   red-button" data-id="@item.Id"><i class="bi bi-trash"></i></a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
+                                    <i class="bi bi-eye-fill"></i> Details
+                                </a>
+
+                                    <a style="margin-left:37px;" class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
+                                    asp-controller="Orders"
+                                   asp-action="AddItemToCart"
+                                   asp-route-id="@item.Id">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+             
+        $(document).ready(function() {
+            $('.js-delete').on('click', function() {
+                var btn = $(this);
+
+
+                bootbox.confirm({
+                    message: 'Are you sure that you need to delete this Movie!',
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-outline-secondary'
+                        }
+                    },
+                    callback: function(result) {
+                        if (result) {
+                        $.ajax({
+                                url: '/Movies/Delete/' + btn.data('id'),
+                                success: function() {
+                                    var moviecontainer = btn.parents('.rowww');
+
+                                    moviecontainer.addClass('animate__animated animate__bounceOut');
+                                    setTimeout(function() {
+                                        moviecontainer.remove();
+                                    }, 1000);
+                                    toastr.warning('Movie is remove successful!');
+                                },
+                                error: function() {
+                                    toastr.error('---error!!---');
+                                }
+                            });
+                        }
+
+                    }
+                });
+
+
+            });
+        });
+    </script>
+}

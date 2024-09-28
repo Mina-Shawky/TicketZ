@@ -1,0 +1,49 @@
+﻿@model AddNewActorViewModel
+
+@{
+    ViewData["Title"] = "Create Actor";
+}
+<h3 class="ipc"><i class="bi bi-file-earmark-plus"></i> Create Actor </h3>
+<hr />
+
+<section class="row justify-content-between">
+    <div class="col-md-5 ">
+        <form asp-action="Create" asp-controller="Actors" enctype="multipart/form-data" method="post">
+
+            <div class="form-group">
+                <label class="text-muted" asp-for="Name"></label>
+                <input type="text" class="form-control" asp-for="Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bio" class="text-muted"></label>
+                <textarea asp-for="Bio" class="form-control"></textarea>
+                <span asp-validation-for="Bio" class="text-danger"></span>
+            </div>
+            <div class="custom-file mt-3" id="ww">
+                <input type="file" class="custom-file-input" asp-for="Picture" accept="image/*" />
+                <label class="custom-file-label" asp-for="Picture"></label>
+                <div><small id="emailHelp" class="form-text text-muted">Only .jpg, .png, .png files are allowed</small></div>
+                <span asp-validation-for="Picture" class="text-danger d_block"></span>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Create</button>
+            <a asp-action="Index" asp-controller="Actors" class="btn btn-danger"><i class="bi bi-x-circle"></i> Cancel</a>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div id="IdPoster">
+            <img src="" class="cover-preview  d-none  img-thumbnail" alt="Picture" style="width:300px;height:360px;" />
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function() {
+            $('#Picture').on('change', function() {
+                $('.cover-preview').attr('src', window.URL.createObjectURL(this.files[0])).removeClass('d-none');
+            });
+        });
+    </script>
+}
